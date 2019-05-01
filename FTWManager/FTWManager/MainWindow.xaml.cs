@@ -24,18 +24,16 @@ namespace FTWManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        FTWSelenium fTWSelenium;
+        FTWJobMarket ftwJobMarket;
         public MainWindow()
         {
             InitializeComponent();
-            fTWSelenium = new FTWSelenium();
+            ftwJobMarket = new FTWJobMarket();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonSuchen_Click(object sender, RoutedEventArgs e)
         {
-            List<SummaryWindowsAssignment> summaryWindowsAssignments = new List<SummaryWindowsAssignment>();
-            summaryWindowsAssignments.AddRange(fTWSelenium.getSummaryWindowsAssignment("EDDF"));
-          
+            ftwJobMarket.getBestDestinationFromDeparture(TextBoxDeparture.Text);
         }
     }
 }
