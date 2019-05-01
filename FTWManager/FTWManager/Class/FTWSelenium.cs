@@ -67,12 +67,14 @@ namespace FTWManager.Class
             if (driver.PageSource != "http://www.ftw-sim.de:8080/FlyTheWorld/users/assignments_meineAuftraege.xhtml?jftfdi=&jffi=%2Fusers%2Fassignments_meineAuftraege.xhtml")
             {
                 driver.Navigate().GoToUrl("http://www.ftw-sim.de:8080/FlyTheWorld/users/assignments.xhtml?jftfdi=&jffi=%2Fusers%2Fassignments.xhtml");
-                Wait();
+              
             }
 
             //git den icao  ein
             try
             {
+                driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).Clear();
+                Thread.Sleep(1000);
                 driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).SendKeys(departureICAO);                          
             }
             catch (Exception e)
@@ -83,7 +85,7 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Name("frm_daten:j_idt138")).Click();
-                Thread.Sleep(2000);
+                Thread.Sleep(3000);
                 Wait();
             }
             catch (Exception e)
@@ -95,7 +97,7 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Id("frm_daten:j_idt144")).Click();
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
             }
             catch (Exception e)
             {

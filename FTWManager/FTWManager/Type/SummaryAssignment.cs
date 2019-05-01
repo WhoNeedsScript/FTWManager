@@ -20,6 +20,7 @@ namespace FTWManager.Type
         public int Cargo;
         public double CargoMoney;
 
+
         public int getGesammtPax()
         {
             return EconomyPax + BusinessPax;

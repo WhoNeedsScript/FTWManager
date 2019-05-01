@@ -46,6 +46,8 @@ namespace FTWManager.Class
                 orderTopListSummaryWindowsAssignments(ref tempSummaryAssignments, maxHopsDestinations);
 
                 tempDestinationFromDeparture.Hops = tempSummaryAssignments;
+
+                destinationFromDepartures.Add(tempDestinationFromDeparture);
             }
 
 
@@ -59,6 +61,10 @@ namespace FTWManager.Class
         {
             List<SummaryAssignment> temp = new List<SummaryAssignment>();
 
+            if(refListSummaryWindowsAssignments.Count == 0)
+            {
+                return;
+            }
             temp.Add(refListSummaryWindowsAssignments[0]);
             foreach (SummaryAssignment summaryWindowsAssignment in refListSummaryWindowsAssignments)
             {

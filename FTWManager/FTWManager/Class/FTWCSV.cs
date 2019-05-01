@@ -37,7 +37,7 @@ namespace FTWManager.Class
                 }
 
                 found = false;
-                string[] temp = line.Replace('"',' ').Replace('€',' ').Split(',');
+                string[] temp = line.Replace('"',' ').Replace('€',' ').Replace(" ",string.Empty).Split(',');
 
 
                
@@ -46,7 +46,7 @@ namespace FTWManager.Class
                 {
                     if(tempSummaryAssignment.ArrivalICAO == temp[3])
                     {
-                        if (temp[7] !=" - ")
+                        if (temp[7] !="-")
                         {
                             tempSummaryAssignment.EconomyPax += Convert.ToInt16(temp[4]);
                             tempSummaryAssignment.EconomPaxMoney += Convert.ToDouble(temp[9]);
@@ -60,6 +60,7 @@ namespace FTWManager.Class
                         }
 
                         found = true;
+                        break;
                     }
                 }
                 
@@ -67,11 +68,11 @@ namespace FTWManager.Class
                 {
                     SummaryAssignment summaryAssignment = new SummaryAssignment();
 
-                    summaryAssignment.DepartureICAO = temp[1];
-                    summaryAssignment.ArrivalICAO = temp[3];
+                    summaryAssignment.DepartureICAO = temp[1].Replace(" ", string.Empty);
+                    summaryAssignment.ArrivalICAO = temp[3].Replace(" ", string.Empty);
 
                     // ob cargo doer pax
-                    if(temp[7] != " - ")
+                    if(temp[7] != "-")
                     {
                         summaryAssignment.EconomyPax = Convert.ToInt16(temp[4]);
                         summaryAssignment.EconomPaxMoney = Convert.ToDouble(temp[9]);
