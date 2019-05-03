@@ -76,22 +76,22 @@ namespace FTWManager.Class
                     {
                         break;
                     }
-                    if(summaryWindowsAssignment.getGesammtPaxMoney() < temp[temp.Count -1].getGesammtPaxMoney())
+                    if(summaryWindowsAssignment.getTotalPaxMoney() < temp[temp.Count -1].getTotalPaxMoney())
                     {
                         temp.Add(summaryWindowsAssignment);
                         break;
                     }
-                    if (summaryWindowsAssignment.getGesammtPaxMoney() > tempSummaryWindowsAssignment.getGesammtPaxMoney() && foundmin == false)
+                    if (summaryWindowsAssignment.getTotalPaxMoney() > tempSummaryWindowsAssignment.getTotalPaxMoney() && foundmin == false)
                     {
                         temp.Insert(temp.IndexOf(tempSummaryWindowsAssignment), summaryWindowsAssignment);
                         break;
                     }
-                    else if (summaryWindowsAssignment.getGesammtPaxMoney() > tempSummaryWindowsAssignment.getGesammtPaxMoney() && foundmin == true)
+                    else if (summaryWindowsAssignment.getTotalPaxMoney() > tempSummaryWindowsAssignment.getTotalPaxMoney() && foundmin == true)
                     {
                         temp.Insert(temp.IndexOf(tempSummaryWindowsAssignment), summaryWindowsAssignment);
                         break;
                     }
-                    else if (summaryWindowsAssignment.getGesammtPaxMoney() < tempSummaryWindowsAssignment.getGesammtPaxMoney())
+                    else if (summaryWindowsAssignment.getTotalPaxMoney() < tempSummaryWindowsAssignment.getTotalPaxMoney())
                     {
                         foundmin = true;
                     }

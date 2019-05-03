@@ -11,38 +11,69 @@ namespace FTWManager.Type
         public  string DepartureICAO;
         public string ArrivalICAO;
 
-        public int EconomyPax;
-        public double EconomPaxMoney;
+        public int TotalEconomyPax;
+        public double TotalEconomPaxMoney;
 
-        public int BusinessPax;
-        public double BusinessPaxMoney;
+        public int TotalBusinessPax;
+        public double TotalBusinessPaxMoney;
 
-        public int Cargo;
-        public double CargoMoney;
+        public int TotalCargo;
+        public double TotalCargoMoney;
 
         List<Assignment> ListAssignments = new List<Assignment>();
 
 
-        public int getGesammtPax()
+        public int getTotalPax()
         {
-            return EconomyPax + BusinessPax;
+            return TotalEconomyPax + TotalBusinessPax;
         }
 
-        public double getGesammtPaxMoney()
+        public double getTotalPaxMoney()
         {
-            return EconomPaxMoney + BusinessPaxMoney;
+            return TotalEconomPaxMoney + TotalBusinessPaxMoney;
         }
 
-        public double getGesamtwert()
+        public double getTotalMoney()
         {
-            return EconomyPax + BusinessPax + CargoMoney;
+            return TotalEconomyPax + TotalBusinessPax + TotalCargoMoney;
         }
 
-        public double getGesamtwertGewicht()
+        public double getTotalGewicht()
         {
-            return Cargo;
+            return TotalCargo;
         }
 
+        public void addAssignment(Assignment assignment)
+        {
+            if(DepartureICAO == null)
+            {
+                DepartureICAO = assignment.Departure;
+            }
+            if(ArrivalICAO == null)
+            {
+                ArrivalICAO = assignment.Arrival;
+            }
+
+            switch (assignment.Type)
+            {
+                case 1:
+                    TotalEconomyPax += assignment.Amount;
+                    TotalEconomPaxMoney += assignment.Money;
+                    break;
+
+                case 2:
+                    TotalBusinessPax += assignment.Amount;
+                    TotalBusinessPaxMoney += assignment.Money;
+                    break;
+
+                case 3:
+                    TotalCargo += assignment.Amount;
+                    TotalCargoMoney += assignment.Money;
+                    break;
+            }
+
+            ListAssignments.Add(assignment);
+        }
         
     }
 }

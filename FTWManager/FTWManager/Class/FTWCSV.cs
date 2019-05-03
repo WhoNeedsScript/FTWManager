@@ -48,33 +48,23 @@ namespace FTWManager.Class
                 if (temp[7] != "-")
                 {
                     assignment.Type = 1;
-                    assignment.Amount = Convert.ToInt16(temp[4]);
-
-                    assignment.Money = Convert.ToDouble(temp[9]); 
+                   
                 }
                 else
                 {
                     assignment.Type = 3;
                 }
 
-                    //////////////////////////////////////////////////////////////////7
+                assignment.Amount = Convert.ToInt16(temp[4]);
+                assignment.Money = Convert.ToDouble(temp[9]);
+
+                //////////////////////////////////////////////////////////////////7
 
                 foreach (SummaryAssignment tempSummaryAssignment in refSummaryAssignments)
                 { 
                     if(tempSummaryAssignment.ArrivalICAO == temp[3])
                     {
-                        if (temp[7] !="-")
-                        {
-                            tempSummaryAssignment.EconomyPax += Convert.ToInt16(temp[4]);
-                            tempSummaryAssignment.EconomPaxMoney += Convert.ToDouble(temp[9]);
-
-                        }
-                        else
-                        {
-                            tempSummaryAssignment.Cargo += Convert.ToInt16(temp[4]);
-                            tempSummaryAssignment.CargoMoney += Convert.ToDouble(temp[9]);
-
-                        }
+                        tempSummaryAssignment.addAssignment(assignment);
 
                         found = true;
                         break;
@@ -88,19 +78,8 @@ namespace FTWManager.Class
                     summaryAssignment.DepartureICAO = temp[1].Replace(" ", string.Empty);
                     summaryAssignment.ArrivalICAO = temp[3].Replace(" ", string.Empty);
 
-                    // ob cargo doer pax
-                    if(temp[7] != "-")
-                    {
-                        summaryAssignment.EconomyPax = Convert.ToInt16(temp[4]);
-                        summaryAssignment.EconomPaxMoney = Convert.ToDouble(temp[9]);
-                      
-                    }
-                    else
-                    {
-                        summaryAssignment.Cargo = Convert.ToInt16(temp[4]);
-                        summaryAssignment.CargoMoney = Convert.ToDouble(temp[9]);
-                        
-                    }
+                    summaryAssignment.addAssignment(assignment);
+
                     refSummaryAssignments.Add(summaryAssignment);
                 }
 

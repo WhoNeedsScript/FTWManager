@@ -84,9 +84,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Class\FTWSelenium.cs" />
-    <Compile Include="Windows\FTWJobmarketManager.xaml.cs">
-      <DependentUpon>FTWJobmarketManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\FTWManager.xaml.cs">
       <DependentUpon>FTWManager.xaml</DependentUpon>
     </Compile>
@@ -124,10 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Page\FTWJobMarket.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\FTWJobmarketManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,20 +49,20 @@ namespace FTWManager.Page
 
                         Departure = tempdestinationFromDeparture.StartAssignment.DepartureICAO,
                         Arrival = tempdestinationFromDeparture.StartAssignment.ArrivalICAO,
-                        Pax = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getGesammtPax()),
-                        PaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getGesammtPaxMoney()),
-                        Cargo = Convert.ToString(tempdestinationFromDeparture.StartAssignment.Cargo),
-                        CargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.CargoMoney),
+                        Pax = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPax()),
+                        PaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPaxMoney()),
+                        Cargo = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargo),
+                        CargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargoMoney),
 
                         HopDeparture = tempSummaryAssignment.DepartureICAO,
                         HopArrival = tempSummaryAssignment.ArrivalICAO,
-                        HopPax = Convert.ToString(tempSummaryAssignment.getGesammtPax()),
-                        HopPaxMoney = Convert.ToString(tempSummaryAssignment.getGesammtPaxMoney()),
-                        HopCargo = Convert.ToString(tempSummaryAssignment.Cargo),
-                        HopCargoMoney = Convert.ToString(tempSummaryAssignment.CargoMoney),
+                        HopPax = Convert.ToString(tempSummaryAssignment.getTotalPax()),
+                        HopPaxMoney = Convert.ToString(tempSummaryAssignment.getTotalPaxMoney()),
+                        HopCargo = Convert.ToString(tempSummaryAssignment.TotalCargo),
+                        HopCargoMoney = Convert.ToString(tempSummaryAssignment.TotalCargoMoney),
 
-                        GesammtPaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getGesammtPaxMoney() + tempSummaryAssignment.getGesammtPaxMoney()),
-                        GesammtCargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.CargoMoney + tempSummaryAssignment.CargoMoney)
+                        GesammtPaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPaxMoney() + tempSummaryAssignment.getTotalPaxMoney()),
+                        GesammtCargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargoMoney + tempSummaryAssignment.TotalCargoMoney)
 
                     }
                     );
