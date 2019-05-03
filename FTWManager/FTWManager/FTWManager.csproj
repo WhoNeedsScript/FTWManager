@@ -70,8 +70,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Class\FTWCheckResources.cs" />
     <Compile Include="Class\FTWCSV.cs" />
     <Compile Include="Class\FTWJobMarket.cs" />
+    <Compile Include="Page\FTWJobMarket.xaml.cs">
+      <DependentUpon>FTWJobMarket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Type\Assignment.cs" />
     <Compile Include="Type\DestinationFromDeparture.cs" />
     <Compile Include="Type\SummaryAssignment.cs" />
     <Compile Include="App.xaml.cs">
@@ -81,6 +86,9 @@
     <Compile Include="Class\FTWSelenium.cs" />
     <Compile Include="Windows\FTWJobmarketManager.xaml.cs">
       <DependentUpon>FTWJobmarketManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FTWManager.xaml.cs">
+      <DependentUpon>FTWManager.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +123,15 @@
     <Folder Include="Downloud\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Page\FTWJobMarket.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\FTWJobmarketManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FTWManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

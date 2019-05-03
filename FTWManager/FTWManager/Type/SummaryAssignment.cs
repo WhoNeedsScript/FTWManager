@@ -20,6 +20,8 @@ namespace FTWManager.Type
         public int Cargo;
         public double CargoMoney;
 
+        List<Assignment> ListAssignments = new List<Assignment>();
+
 
         public int getGesammtPax()
         {
@@ -40,5 +42,7 @@ namespace FTWManager.Type
         {
             return Cargo;
         }
+
+        
     }
 }

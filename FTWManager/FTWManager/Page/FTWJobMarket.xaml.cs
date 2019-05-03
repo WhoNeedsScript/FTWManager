@@ -1,5 +1,4 @@
-﻿using FTWManager.Class;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,35 +10,36 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using FTWManager.Class;
 using FTWManager.Type;
 
-namespace FTWManager.Windows
+namespace FTWManager.Page
 {
     /// <summary>
-    /// Interaktionslogik für FTWJobmarketManager.xaml
+    /// Interaktionslogik für FTWJobMarket.xaml
     /// </summary>
-    public partial class FTWJobmarketManager : Window
+    public partial class FTWJobMarket : System.Windows.Controls.Page
     {
-        FTWJobMarket ftwJobmarket;
-        FTWCheckResources ftwCheckResources;
+        Class.FTWJobMarket ftwJobmarket;
+        Class.FTWCheckResources ftwCheckResources;
 
-        public FTWJobmarketManager()
+        public FTWJobMarket()
         {
             InitializeComponent();
-            
-            ftwJobmarket = new FTWJobMarket();
-            ftwCheckResources = new FTWCheckResources();
+
+            ftwJobmarket = new Class.FTWJobMarket();
+            ftwCheckResources = new Class.FTWCheckResources();
         }
 
         private void CmdSearch_Click(object sender, RoutedEventArgs e)
         {
+            List<DestinationFromDeparture> listDestinationFromDepartures = ftwJobmarket.getBestDestinationFromDeparture(textboxDepartureIcao.Text);
 
-            List<DestinationFromDeparture> listDestinationFromDepartures  = ftwJobmarket.getBestDestinationFromDeparture(textboxDepartureIcao.Text);
-
-            foreach(DestinationFromDeparture tempdestinationFromDeparture in listDestinationFromDepartures)
-            {             
+            foreach (DestinationFromDeparture tempdestinationFromDeparture in listDestinationFromDepartures)
+            {
 
                 foreach (SummaryAssignment tempSummaryAssignment in tempdestinationFromDeparture.Hops)
                 {
@@ -87,7 +87,7 @@ namespace FTWManager.Windows
 
             public string GesammtPaxMoney { get; set; }
             public string GesammtCargoMoney { get; set; }
-           
+
         }
     }
 }

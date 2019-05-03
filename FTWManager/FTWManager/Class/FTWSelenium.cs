@@ -38,7 +38,7 @@ namespace FTWManager.Class
 
             try
             {
-                driver.FindElement(By.Name("j_security_check:j_username")).SendKeys("WhoNeedsSkill");
+                driver.FindElement(By.Name("j_security_check:j_username")).SendKeys("Germanair");
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@ namespace FTWManager.Class
 
             try
             {
-                driver.FindElement(By.Name("j_security_check:j_password")).SendKeys("WhoNeedsSkill1234");
+                driver.FindElement(By.Name("j_security_check:j_password")).SendKeys("737");
             }
             catch (Exception e)
             {
