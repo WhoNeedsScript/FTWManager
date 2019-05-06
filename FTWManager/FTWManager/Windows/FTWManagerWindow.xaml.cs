@@ -12,32 +12,50 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using FTWManager.Page;
+using FTWManager.Pages;
+using FTWManager.Class;
 
 namespace FTWManager.Windows
 {
     /// <summary>
     /// Interaktionslogik für FTWManager.xaml
     /// </summary>
-    public partial class FTWManager : Window
+    public partial class FTWManagerWindow : Window
     {
-        FTWJobMarket pageJobMarket;
+        FTWJobMarketPage pageJobMarket;
+        FTWPlanePage  pageFTWPlane;
 
-        public FTWManager()
+        FTWCheckResources ftwCheckResources;
+
+        public FTWManagerWindow()
         {
             InitializeComponent();
+            ftwCheckResources = new FTWCheckResources();
         }
 
         private void ButtonJobMarket_Click(object sender, RoutedEventArgs e)
         {
             if(pageJobMarket == null)
             {
-                pageJobMarket = new FTWJobMarket();
+                pageJobMarket = new FTWJobMarketPage();
                 frameFTWManager.Content = pageJobMarket;
             }
             else if(pageJobMarket != null)
             {
                 frameFTWManager.Content = pageJobMarket;
+            }
+        }
+
+        private void ButtonPlane_Click(object sender, RoutedEventArgs e)
+        {
+            if (pageJobMarket == null)
+            {
+                pageFTWPlane = new FTWPlanePage();
+                frameFTWManager.Content = pageFTWPlane;
+            }
+            else if (pageFTWPlane != null)
+            {
+                frameFTWManager.Content = pageFTWPlane;
             }
         }
     }

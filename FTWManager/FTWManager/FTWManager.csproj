@@ -73,19 +73,26 @@
     <Compile Include="Class\FTWCheckResources.cs" />
     <Compile Include="Class\FTWCSV.cs" />
     <Compile Include="Class\FTWJobMarket.cs" />
-    <Compile Include="Page\FTWJobMarket.xaml.cs">
-      <DependentUpon>FTWJobMarket.xaml</DependentUpon>
+    <Compile Include="Class\FTWManager.cs" />
+    <Compile Include="Class\FTWManagerConsol.cs" />
+    <Compile Include="Class\FTWXML.cs" />
+    <Compile Include="Pages\FTWJobMarketPage.xaml.cs">
+      <DependentUpon>FTWJobMarketPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FTWPlanePage.xaml.cs">
+      <DependentUpon>FTWPlanePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Type\Assignment.cs" />
     <Compile Include="Type\DestinationFromDeparture.cs" />
+    <Compile Include="Type\Plane.cs" />
     <Compile Include="Type\SummaryAssignment.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Class\FTWSelenium.cs" />
-    <Compile Include="Windows\FTWManager.xaml.cs">
-      <DependentUpon>FTWManager.xaml</DependentUpon>
+    <Compile Include="Windows\FTWManagerWindow.xaml.cs">
+      <DependentUpon>FTWManagerWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -117,14 +124,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Document\" />
     <Folder Include="Downloud\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Page\FTWJobMarket.xaml">
+    <Page Include="Pages\FTWJobMarketPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\FTWManager.xaml">
+    <Page Include="Pages\FTWPlanePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FTWManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

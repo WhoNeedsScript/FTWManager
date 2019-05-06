@@ -1,4 +1,4 @@
-﻿<Window x:Class="FTWManager.Windows.FTWManager"
+﻿<Window x:Class="FTWManager.Windows.FTWManagerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="FTWManager" Height="450" Width="800">
     <Grid>
-        <Frame x:Name="frameFTWManager" Content="" HorizontalAlignment="Left" Height="397" VerticalAlignment="Top" Width="792" Margin="0,22,0,0"/>
+        <Frame x:Name="frameFTWManager" Content="" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="800" Margin="0,22,0,0"/>
 
         <Grid Background="Black" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="792">
             <Button Content="JobMarket" x:Name="buttonJobMarket" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="22" Click="ButtonJobMarket_Click"/>
+            <Button Content="Planes" x:Name="buttonPlane" HorizontalAlignment="Left" Margin="80,0,0,0" VerticalAlignment="Top" Width="93" Height="22" Click="ButtonPlane_Click"/>
         </Grid>
 
     </Grid>

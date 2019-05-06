@@ -60,7 +60,7 @@ namespace FTWManager.Class
         }
 
 
-        public void getAssignmentsByAirport(string departureICAO)
+        public void GetAssignmentsByAirport(string departureICAO)
         {
             List<SummaryAssignment> summaryWindowsAssignmentList = new List<SummaryAssignment>();
 

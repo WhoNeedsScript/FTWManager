@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+
 namespace FTWManager.Class
 {
     class FTWCheckResources
@@ -12,6 +13,7 @@ namespace FTWManager.Class
         public FTWCheckResources()
         {
             CheckFolder();
+            CheckXMLFiles();
         }
 
         public void CheckFolder()
@@ -19,6 +21,20 @@ namespace FTWManager.Class
             if(!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Downloud")))
             {
                 DirectoryInfo di = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Downloud"));
+            }
+            if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Document")))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Document"));
+            }
+        }
+
+        public void CheckXMLFiles()
+        {
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "Document/FTWPlane.xml")))
+            {
+                FTWXML ftwXML = new FTWXML();
+                ftwXML.createFTWPlaneXML();
+                ftwXML = null;
             }
         }
     }

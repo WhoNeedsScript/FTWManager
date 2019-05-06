@@ -20,7 +20,7 @@ namespace FTWManager.Class
 
         }
 
-
+      
 
         public List<DestinationFromDeparture> getBestDestinationFromDeparture(string departure, int max = 3, int maxHops = 1, int maxHopsDestinations = 3)
         {
@@ -28,7 +28,7 @@ namespace FTWManager.Class
             List<SummaryAssignment> topSummaryWindowsAssignments = new List<SummaryAssignment>();
 
 
-            ftwSelenium.getAssignmentsByAirport(departure);
+            ftwSelenium.GetAssignmentsByAirport(departure);
             ftwCSV.ReadAssignmentCSV(ref topSummaryWindowsAssignments);
 
             orderTopListSummaryWindowsAssignments(ref topSummaryWindowsAssignments,max);
@@ -40,7 +40,7 @@ namespace FTWManager.Class
 
                 tempDestinationFromDeparture.StartAssignment = summaryAssignment;
 
-                ftwSelenium.getAssignmentsByAirport(summaryAssignment.ArrivalICAO);
+                ftwSelenium.GetAssignmentsByAirport(summaryAssignment.ArrivalICAO);
                 ftwCSV.ReadAssignmentCSV(ref tempSummaryAssignments);
 
                 orderTopListSummaryWindowsAssignments(ref tempSummaryAssignments, maxHopsDestinations);
@@ -59,51 +59,19 @@ namespace FTWManager.Class
 
         private void orderTopListSummaryWindowsAssignments(ref List<SummaryAssignment> refListSummaryWindowsAssignments, int top)
         {
-            List<SummaryAssignment> temp = new List<SummaryAssignment>();
-
-            if(refListSummaryWindowsAssignments.Count == 0)
+            for (int i = 0; i < refListSummaryWindowsAssignments.Count; i++)
             {
-                return;
-            }
-            temp.Add(refListSummaryWindowsAssignments[0]);
-            foreach (SummaryAssignment summaryWindowsAssignment in refListSummaryWindowsAssignments)
-            {
-                bool foundmin = false;
+                int min = i;
+                for (int j = i + 1; j < refListSummaryWindowsAssignments.Count; j++)
+                    if (refListSummaryWindowsAssignments[j].getTotalPaxMoney() > refListSummaryWindowsAssignments[min].getTotalPaxMoney())
+                        min = j;
 
-                foreach (SummaryAssignment tempSummaryWindowsAssignment in temp)
-                {
-                    if(summaryWindowsAssignment.ArrivalICAO == tempSummaryWindowsAssignment.ArrivalICAO)
-                    {
-                        break;
-                    }
-                    if(summaryWindowsAssignment.getTotalPaxMoney() < temp[temp.Count -1].getTotalPaxMoney())
-                    {
-                        temp.Add(summaryWindowsAssignment);
-                        break;
-                    }
-                    if (summaryWindowsAssignment.getTotalPaxMoney() > tempSummaryWindowsAssignment.getTotalPaxMoney() && foundmin == false)
-                    {
-                        temp.Insert(temp.IndexOf(tempSummaryWindowsAssignment), summaryWindowsAssignment);
-                        break;
-                    }
-                    else if (summaryWindowsAssignment.getTotalPaxMoney() > tempSummaryWindowsAssignment.getTotalPaxMoney() && foundmin == true)
-                    {
-                        temp.Insert(temp.IndexOf(tempSummaryWindowsAssignment), summaryWindowsAssignment);
-                        break;
-                    }
-                    else if (summaryWindowsAssignment.getTotalPaxMoney() < tempSummaryWindowsAssignment.getTotalPaxMoney())
-                    {
-                        foundmin = true;
-                    }
-                    
-                }
-
-                foundmin = false;
+                SummaryAssignment tmp = refListSummaryWindowsAssignments[min];
+                refListSummaryWindowsAssignments[min] = refListSummaryWindowsAssignments[i];
+                refListSummaryWindowsAssignments[i] = tmp;
             }
 
-            refListSummaryWindowsAssignments = temp;
-
-            while(refListSummaryWindowsAssignments.Count > top)
+            while (refListSummaryWindowsAssignments.Count > top)
             {
                 refListSummaryWindowsAssignments.RemoveAt(refListSummaryWindowsAssignments.Count - 1);
             }

@@ -1,0 +1,31 @@
+﻿<Page x:Class="FTWManager.Pages.FTWPlanePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FTWManager.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FTWPlanePage">
+
+    <Grid>
+        <Button Content="Add Plane" x:Name="buttonAddPlane" HorizontalAlignment="Left" Margin="696,377,0,0" VerticalAlignment="Top" Width="75" Click="ButtonAddPlane_Click"/>
+
+        <Label Content="Name" HorizontalAlignment="Left" Margin="277,125,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPlaneName" HorizontalAlignment="Left" Height="23" Margin="282,156,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="EconemySeats" HorizontalAlignment="Left" Margin="277,237,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPlaneEconemySeats" HorizontalAlignment="Left" Height="23" Margin="282,214,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="BusinessSeats" HorizontalAlignment="Left" Margin="277,184,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPlaneBusinessSeats" HorizontalAlignment="Left" Height="23" Margin="282,261,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="Cargo" HorizontalAlignment="Left" Margin="277,289,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPlaneCargo" HorizontalAlignment="Left" Height="23" Margin="282,315,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <Label Content="Payloud" HorizontalAlignment="Left" Margin="277,348,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxPlanePayloud" HorizontalAlignment="Left" Height="23" Margin="282,374,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        
+       
+        <Label Content="Flugzeuge" HorizontalAlignment="Left" Margin="673,56,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxPlanes" HorizontalAlignment="Left" Margin="651,83,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBoxPlanes_SelectionChanged" />
+
+
+    </Grid>
+</Page>

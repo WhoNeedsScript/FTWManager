@@ -16,17 +16,17 @@ using System.Windows.Shapes;
 using FTWManager.Class;
 using FTWManager.Type;
 
-namespace FTWManager.Page
+namespace FTWManager.Pages
 {
     /// <summary>
     /// Interaktionslogik für FTWJobMarket.xaml
     /// </summary>
-    public partial class FTWJobMarket : System.Windows.Controls.Page
+    public partial class FTWJobMarketPage : Page
     {
         Class.FTWJobMarket ftwJobmarket;
         Class.FTWCheckResources ftwCheckResources;
 
-        public FTWJobMarket()
+        public FTWJobMarketPage()
         {
             InitializeComponent();
 
@@ -69,6 +69,22 @@ namespace FTWManager.Page
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+        public void OpenConsol()
+        {
+            FTWManagerConsol ftwManagerConsol = new FTWManagerConsol();
+        }
+
+
         public struct Items
         {
             public string Departure { get; set; }
