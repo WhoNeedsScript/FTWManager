@@ -18,7 +18,7 @@ namespace FTWManager.Class
 
         public void CheckFolder()
         {
-            if(!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Downloud")))
+            if(!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Download")))
             {
                 DirectoryInfo di = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Download"));
             }
@@ -35,6 +35,12 @@ namespace FTWManager.Class
                 FTWXML ftwXML = new FTWXML();
                 ftwXML.createFTWPlaneXML();
                 ftwXML = null;
+            }
+
+            if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Download/Auftrasuebersicht.csv")))
+            {
+                FTWCSV ftwCSV = new FTWCSV();
+                ftwCSV.DeleteAuftragsuebersicht();
             }
         }
     }

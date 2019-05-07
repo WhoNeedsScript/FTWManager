@@ -38,6 +38,17 @@ namespace FTWManager.Pages
         {
             List<DestinationFromDeparture> listDestinationFromDepartures = ftwJobmarket.getBestDestinationFromDeparture(textboxDepartureIcao.Text);
 
+            foreach(DestinationFromDeparture destinationFromDeparture in listDestinationFromDepartures)
+            {
+                destinationFromDeparture.StartAssignment.order();
+                
+                foreach(SummaryAssignment summaryAssignment in destinationFromDeparture.Hops)
+                {
+                    summaryAssignment.order();
+                }
+            }
+
+
             foreach (DestinationFromDeparture tempdestinationFromDeparture in listDestinationFromDepartures)
             {
 

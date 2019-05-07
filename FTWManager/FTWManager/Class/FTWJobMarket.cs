@@ -59,6 +59,7 @@ namespace FTWManager.Class
 
         private void orderTopListSummaryWindowsAssignments(ref List<SummaryAssignment> refListSummaryWindowsAssignments, int top)
         {
+
             for (int i = 0; i < refListSummaryWindowsAssignments.Count; i++)
             {
                 int min = i;
@@ -79,5 +80,6 @@ namespace FTWManager.Class
 
         }
 
+       
     }
 }

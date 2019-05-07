@@ -25,7 +25,7 @@ namespace FTWManager.Class
         public FTWSelenium()
         {
             FirefoxOptions options = new FirefoxOptions();
-            options.SetPreference("browser.download.dir", Path.Combine(Environment.CurrentDirectory, "Downloud"));
+            options.SetPreference("browser.download.dir", Path.Combine(Environment.CurrentDirectory, "Download"));
             options.SetPreference("browser.download.folderList", 2);
             options.SetPreference("browser.download.useDownloadDir", true);
             options.SetPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv");
@@ -74,7 +74,7 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).Clear();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).SendKeys(departureICAO);                          
             }
             catch (Exception e)

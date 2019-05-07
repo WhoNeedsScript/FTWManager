@@ -20,7 +20,7 @@ namespace FTWManager.Type
         public int TotalCargo;
         public double TotalCargoMoney;
 
-        List<Assignment> ListAssignments = new List<Assignment>();
+        public List<Assignment> ListAssignments = new List<Assignment>();
 
 
         public int getTotalPax()
@@ -59,6 +59,15 @@ namespace FTWManager.Type
                 case 1:
                     TotalEconomyPax += assignment.Amount;
                     TotalEconomPaxMoney += assignment.Money;
+                    
+                    if(ListAssignments.Count == 0)
+                    {
+                        ListAssignments.Add(assignment);
+                    }
+                    else
+                    {
+                        ListAssignments[0] = assignment;
+                    }
                     break;
 
                 case 2:
@@ -69,11 +78,25 @@ namespace FTWManager.Type
                 case 3:
                     TotalCargo += assignment.Amount;
                     TotalCargoMoney += assignment.Money;
+                    ListAssignments.Add(assignment);
                     break;
             }
-
-            ListAssignments.Add(assignment);
         }
         
+        public void order()
+        {
+            for (int i = 0; i < ListAssignments.Count; i++)
+            {
+                int min = i;
+                for (int j = i + 1; j < ListAssignments.Count; j++)
+                    if (ListAssignments[j].Amount < ListAssignments[min].Amount && ListAssignments[j].Type == ListAssignments[min].Type)
+                        min = j;
+
+                Assignment tmp = ListAssignments[min];
+                ListAssignments[min] = ListAssignments[i];
+                ListAssignments[i] = tmp;
+            }
+
+        }
     }
 }

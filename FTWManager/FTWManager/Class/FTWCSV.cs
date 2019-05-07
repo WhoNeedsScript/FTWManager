@@ -21,7 +21,7 @@ namespace FTWManager.Class
 
         public void ReadAssignmentCSV(ref List<SummaryAssignment> refSummaryAssignments)
         {
-            reader = new StreamReader(Path.Combine(Environment.CurrentDirectory, "Downloud/Auftrasuebersicht.csv"));
+            reader = new StreamReader(Path.Combine(Environment.CurrentDirectory, "Download/Auftrasuebersicht.csv"));
             bool found;
             bool firstLine = true;
 
@@ -86,7 +86,15 @@ namespace FTWManager.Class
             }
 
             reader.Close();
-            File.Delete(Path.Combine(Environment.CurrentDirectory, "Downloud/Auftrasuebersicht.csv"));
+            DeleteAuftragsuebersicht();
+
+
+
+        }
+
+        public void DeleteAuftragsuebersicht()
+        {
+            File.Delete(Path.Combine(Environment.CurrentDirectory, "Download/Auftrasuebersicht.csv"));
         }
     }
 
