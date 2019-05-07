@@ -20,7 +20,7 @@ namespace FTWManager.Class
         {
             if(!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Downloud")))
             {
-                DirectoryInfo di = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Downloud"));
+                DirectoryInfo di = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Download"));
             }
             if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Document")))
             {

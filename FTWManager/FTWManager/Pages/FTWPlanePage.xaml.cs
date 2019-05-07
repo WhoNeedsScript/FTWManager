@@ -49,16 +49,29 @@ namespace FTWManager.Pages
 
         private void ButtonAddPlane_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Plane plane in planes)
-            {
-                if (plane.Name == textBoxPlaneName.Text)
-                {
 
+
+            Plane plane = new Plane();
+
+            plane.Name = textBoxPlaneName.Text;
+            plane.EconemySeats = Convert.ToInt16(textBoxPlaneEconemySeats.Text);
+            plane.BusinessSeats = Convert.ToInt16(textBoxPlaneBusinessSeats.Text);
+            plane.Cargo = Convert.ToInt16(textBoxPlaneCargo.Text);
+            plane.Payloud = Convert.ToInt16(textBoxPlanePayloud.Text);
+
+            foreach (Plane tempplane in planes)
+            {
+                if (tempplane.Name == textBoxPlaneName.Text)
+                {
+                    ftwXML.EditPlane(plane.Name, plane.EconemySeats, plane.BusinessSeats, plane.Cargo, plane.Payloud);
+                    planes.Add(plane);
                     return;
                 }
             }
 
-            ftwXML.writeAddAirplane(textBoxPlaneName.Text, Convert.ToInt16(textBoxPlaneEconemySeats.Text), Convert.ToInt16(textBoxPlaneBusinessSeats.Text), Convert.ToInt16(textBoxPlaneCargo.Text), Convert.ToInt16(textBoxPlanePayloud.Text));
+            ftwXML.writeAddPlane(plane.Name,plane.EconemySeats,plane.BusinessSeats,plane.Cargo,plane.Payloud);
+            planes.Add(plane);
+
         }
 
         private void ComboBoxPlanes_SelectionChanged(object sender, SelectionChangedEventArgs e)
