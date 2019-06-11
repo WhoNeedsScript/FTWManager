@@ -19,74 +19,84 @@ namespace FTWManager.Class
            
         }
 
-        public void ReadAssignmentCSV(ref List<SummaryAssignment> refSummaryAssignments)
+        public void ReadAssignmentCSV(ref List<AssignmentsFromDeparture> refSummaryAssignments)
         {
-            reader = new StreamReader(Path.Combine(Environment.CurrentDirectory, "Download/Auftrasuebersicht.csv"));
-            bool found;
-            bool firstLine = true;
-
-            string line;
-
-           
-            while ((line = reader.ReadLine()) != null)
+            try
             {
-                if(firstLine == true)
+                reader = new StreamReader(Path.Combine(Environment.CurrentDirectory, "Download/Auftragsuebersicht.csv"));
+                bool found;
+                bool firstLine = true;
+
+                string line;
+
+
+                while ((line = reader.ReadLine()) != null)
                 {
-                    firstLine = false;
-                    continue;
-                }
-
-                found = false;
-                string[] temp = line.Replace('"',' ').Replace('€',' ').Replace(" ",string.Empty).Split(',');
-
-                //Erstellt Assignment aus CSV Zeile
-                Assignment assignment = new Assignment();
-
-                assignment.Departure = temp[1].Replace(" ", string.Empty);
-                assignment.Arrival = temp[3].Replace(" ", string.Empty);
-
-                if (temp[7] != "-")
-                {
-                    assignment.Type = 1;
-                   
-                }
-                else
-                {
-                    assignment.Type = 3;
-                }
-
-                assignment.Amount = Convert.ToInt16(temp[4]);
-                assignment.Money = Convert.ToDouble(temp[9]);
-
-                //////////////////////////////////////////////////////////////////7
-
-                foreach (SummaryAssignment tempSummaryAssignment in refSummaryAssignments)
-                { 
-                    if(tempSummaryAssignment.ArrivalICAO == temp[3])
+                    if (firstLine == true)
                     {
-                        tempSummaryAssignment.addAssignment(assignment);
-
-                        found = true;
-                        break;
+                        firstLine = false;
+                        continue;
                     }
+
+                    found = false;
+                    string[] temp = line.Replace('"', ' ').Replace('€', ' ').Replace('k', ' ').Replace('g', ' ').Replace('.', ' ').Replace(" ", string.Empty).Split(',');
+
+                    //Erstellt Assignment aus CSV Zeile
+                    Assignment assignment = new Assignment();
+
+                    assignment.Departure = temp[1].Replace(" ", string.Empty);
+                    assignment.Arrival = temp[3].Replace(" ", string.Empty);
+
+                    if (temp[7] != "-")
+                    {
+                        assignment.Type = 1;
+
+                        assignment.paxWeight = Convert.ToInt16(temp[7].Replace(" ", string.Empty));
+                        assignment.paxCargo = Convert.ToInt16(temp[8].Replace(" ", string.Empty));
+                    }
+                    else
+                    {
+                        assignment.Type = 3;
+                    }
+
+                    assignment.Amount = Convert.ToInt16(temp[4]);
+                    assignment.Money = Convert.ToDouble(temp[9]);
+
+                    //////////////////////////////////////////////////////////////////7
+
+                    foreach (AssignmentsFromDeparture tempSummaryAssignment in refSummaryAssignments)
+                    {
+                        if (tempSummaryAssignment.ArrivalICAO == temp[3])
+                        {
+                            tempSummaryAssignment.addAssignment(assignment);
+
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found == false)
+                    {
+                        AssignmentsFromDeparture summaryAssignment = new AssignmentsFromDeparture();
+
+                        summaryAssignment.DepartureICAO = temp[1].Replace(" ", string.Empty);
+                        summaryAssignment.ArrivalICAO = temp[3].Replace(" ", string.Empty);
+
+                        summaryAssignment.addAssignment(assignment);
+
+                        refSummaryAssignments.Add(summaryAssignment);
+                    }
+
                 }
-                
-                if(found == false)
-                {
-                    SummaryAssignment summaryAssignment = new SummaryAssignment();
 
-                    summaryAssignment.DepartureICAO = temp[1].Replace(" ", string.Empty);
-                    summaryAssignment.ArrivalICAO = temp[3].Replace(" ", string.Empty);
-
-                    summaryAssignment.addAssignment(assignment);
-
-                    refSummaryAssignments.Add(summaryAssignment);
-                }
-
+                reader.Close();
+                DeleteAuftragsuebersicht();
             }
-
-            reader.Close();
-            DeleteAuftragsuebersicht();
+            catch
+            {
+                return;
+            }
+            
 
 
 
@@ -94,7 +104,7 @@ namespace FTWManager.Class
 
         public void DeleteAuftragsuebersicht()
         {
-            File.Delete(Path.Combine(Environment.CurrentDirectory, "Download/Auftrasuebersicht.csv"));
+            File.Delete(Path.Combine(Environment.CurrentDirectory, "Download/Auftragsuebersicht.csv"));
         }
     }
 

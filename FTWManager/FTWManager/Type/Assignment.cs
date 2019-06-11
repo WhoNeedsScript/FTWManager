@@ -14,5 +14,6 @@ namespace FTWManager.Type
         public int Amount;
         public double Money;
         public int paxCargo;
+        public int paxWeight;
     }
 }

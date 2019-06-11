@@ -13,73 +13,208 @@ namespace FTWManager.Class
         FTWSelenium ftwSelenium;
         FTWCSV ftwCSV;
 
+
         public FTWJobMarket()
         {
             ftwSelenium = new FTWSelenium();
-            ftwCSV = new FTWCSV(); 
+            ftwCSV = new FTWCSV();
 
         }
 
-      
 
-        public List<DestinationFromDeparture> getBestDestinationFromDeparture(string departure, int max = 3, int maxHops = 1, int maxHopsDestinations = 3)
+
+        public Trip GetBestTrip(string departure, bool withPlaneLoad = false, Plane _plane = null, int maxArrivals = 3, int maxHops = 3)
         {
-            List<DestinationFromDeparture> destinationFromDepartures = new List<DestinationFromDeparture>();
-            List<SummaryAssignment> topSummaryWindowsAssignments = new List<SummaryAssignment>();
+            //Rückgabewert Bester Trip
+            Trip bestTrip = new Trip();
 
+            List<Trip> listTrip = new List<Trip>();
+            List<AssignmentsFromDeparture> listAssignmentsFromDepartures = new List<AssignmentsFromDeparture>();
 
+            //holt sich die Assignemts CSV-Datei vom Startflughafen
             ftwSelenium.GetAssignmentsByAirport(departure);
-            ftwCSV.ReadAssignmentCSV(ref topSummaryWindowsAssignments);
 
-            orderTopListSummaryWindowsAssignments(ref topSummaryWindowsAssignments,max);
+            //liest die CSV Datei von dem StartflughafenFTWJobsRoute
+            ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
 
-            foreach(SummaryAssignment summaryAssignment in topSummaryWindowsAssignments)
+            //Sortiert alle Aufträge eines Flughafens nacht Typ und Ammount um die Beladung des Flugzeuges Wenn ausgeählt besser und einfacher läuft
+            foreach (AssignmentsFromDeparture tempassignmentsFromDeparture in listAssignmentsFromDepartures)
             {
-                DestinationFromDeparture tempDestinationFromDeparture = new DestinationFromDeparture();
-                List<SummaryAssignment> tempSummaryAssignments = new List<SummaryAssignment>();
+                tempassignmentsFromDeparture.OrderByTypeAndAmount();
+            }
 
-                tempDestinationFromDeparture.StartAssignment = summaryAssignment;
 
-                ftwSelenium.GetAssignmentsByAirport(summaryAssignment.ArrivalICAO);
-                ftwCSV.ReadAssignmentCSV(ref tempSummaryAssignments);
+            if (withPlaneLoad == true)
+            {
+                foreach (AssignmentsFromDeparture assignmentsFromDeparture in listAssignmentsFromDepartures)
+                {
+                    _plane.reset();
+                    foreach (Assignment assignment in assignmentsFromDeparture.ListAssignments)
+                    {
+                        if (_plane.LoadAssignment(assignment) == false && assignment.Type == 3)
+                        {
 
-                orderTopListSummaryWindowsAssignments(ref tempSummaryAssignments, maxHopsDestinations);
 
-                tempDestinationFromDeparture.Hops = tempSummaryAssignments;
+                            break;
+                        }
+                    }
+                    assignmentsFromDeparture.TotalEconomyPax = _plane.occupiedSeats;
+                    assignmentsFromDeparture.TotalEconomPaxMoney = _plane.paxMoney;
+                    assignmentsFromDeparture.TotalCargo = _plane.occupiedCargo;
+                    assignmentsFromDeparture.TotalCargoMoney = _plane.cargoMoney;
+                    assignmentsFromDeparture.ListAssignments = _plane.load;
+                }
+            }
 
-                destinationFromDepartures.Add(tempDestinationFromDeparture);
+
+            // Müll Variable um die besten 3 vom start flughafen zu bekommen 
+            Trip tempTrrp = new Trip();
+            tempTrrp.Hop = listAssignmentsFromDepartures;
+            tempTrrp.OrderArrivalsByTotalMoney(maxArrivals);
+            //
+
+            //
+
+
+            //Alle Trips Obejte die Benötigt werden Für Alle Routen Werden Erstellt
+            foreach (AssignmentsFromDeparture startHop in tempTrrp.Hop)
+            {
+
+                for (int i = 0; i < Math.Pow(maxArrivals, maxHops - 1); i++)
+                {
+                    Trip temp = new Trip();
+
+                    temp.Hop.Add(startHop);
+                    listTrip.Add(temp);
+                }
+
             }
 
 
 
+            for (int aktuellerhop = 0; aktuellerhop < 2; aktuellerhop++)
+            {
+                // hier werden die 2 Hops hinzugefügt
+                int momentan = 0;
+
+                for (int i = 0; i < listTrip.Count; i += 9)
+                {
+                    listAssignmentsFromDepartures.Clear();
+
+                    // Anti Steffan Abfrage timer Solange bis Assignnets Zurpck gegeben werden
+                    while(listAssignmentsFromDepartures.Count() == 0)
+                    {
+                        ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO);
+
+                        //liest die CSV Datei von dem StartflughafenFTWJobsRoute
+                        ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
+                    }
 
 
-            return destinationFromDepartures;
+                    //erstellt den trip
+                    foreach (AssignmentsFromDeparture tempassignmentsFromDeparture in listAssignmentsFromDepartures)
+                    {
+                        tempassignmentsFromDeparture.OrderByTypeAndAmount();
+                    }
+
+
+                    if (withPlaneLoad == true)
+                    {
+                        foreach (AssignmentsFromDeparture assignmentsFromDeparture in listAssignmentsFromDepartures)
+                        {
+                            _plane.reset();
+                            foreach (Assignment assignment in assignmentsFromDeparture.ListAssignments)
+                            {
+                                if (_plane.LoadAssignment(assignment) == false && assignment.Type == 3)
+                                {
+
+
+                                    break;
+                                }
+                            }
+                            assignmentsFromDeparture.TotalEconomyPax = _plane.occupiedSeats;
+                            assignmentsFromDeparture.TotalEconomPaxMoney = _plane.paxMoney;
+                            assignmentsFromDeparture.TotalCargo = _plane.occupiedCargo;
+                            assignmentsFromDeparture.TotalCargoMoney = _plane.cargoMoney;
+                            assignmentsFromDeparture.ListAssignments = _plane.load;
+                        }
+                    }
+
+
+                    // Müll Variable um die besten 3 vom start flughafen zu bekommen y
+                    tempTrrp = new Trip();
+                    tempTrrp.Hop = listAssignmentsFromDepartures;
+                    tempTrrp.OrderArrivalsByTotalMoney(maxArrivals);
+                    //
+                    for (int a = 0; a < tempTrrp.Hop.Count; a++, momentan++)
+                    {
+
+                        if (aktuellerhop == 0)
+                        {
+                           
+                            for (int b = 0; b < 3; b++, momentan++)
+                            {
+                                listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
+                            }
+                            momentan -= 1;
+                        }
+                        else
+                        {
+                            listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
+
+                        }
+                    }
+
+
+                    if (aktuellerhop != 0)
+                    {
+                        i -= 6;
+                    }
+                }
+               
+            }
+
+            foreach(Trip trip in listTrip)
+            {
+                if(trip.Hop[0].ArrivalICAO != trip.Hop[1].DepartureICAO)
+                {
+                    int a = 0;
+                }
+
+                if (trip.Hop[1].ArrivalICAO != trip.Hop[2].DepartureICAO)
+                {
+                    int a = 0;
+                }
+            }
+            
+            /// Muss noch getestet werden ob es funktioniert
+            /// // Hier soll der Trip Herausgesuh
+            /// cht werden der am meisten Geld gibt
+            foreach(Trip findBestTrip in listTrip)
+            {
+                if(bestTrip == null)
+                {
+                    bestTrip = findBestTrip;
+                }
+                else
+                {
+                    if(bestTrip.getMoney() < findBestTrip.getMoney())
+                    {
+                        bestTrip = findBestTrip;
+                    }
+                }
+            }
+
+            return bestTrip;
+
         }
 
-        private void orderTopListSummaryWindowsAssignments(ref List<SummaryAssignment> refListSummaryWindowsAssignments, int top)
+
+        public void LoadPlane()
         {
 
-            for (int i = 0; i < refListSummaryWindowsAssignments.Count; i++)
-            {
-                int min = i;
-                for (int j = i + 1; j < refListSummaryWindowsAssignments.Count; j++)
-                    if (refListSummaryWindowsAssignments[j].getTotalPaxMoney() > refListSummaryWindowsAssignments[min].getTotalPaxMoney())
-                        min = j;
-
-                SummaryAssignment tmp = refListSummaryWindowsAssignments[min];
-                refListSummaryWindowsAssignments[min] = refListSummaryWindowsAssignments[i];
-                refListSummaryWindowsAssignments[i] = tmp;
-            }
-
-            while (refListSummaryWindowsAssignments.Count > top)
-            {
-                refListSummaryWindowsAssignments.RemoveAt(refListSummaryWindowsAssignments.Count - 1);
-            }
-          
-
         }
 
-       
+
     }
 }

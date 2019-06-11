@@ -39,7 +39,15 @@ namespace FTWManager.Pages
 
         private void fillComboBoxPlanes()
         {
-            planes.AddRange(ftwXML.readFTWPlaneXML());
+            if(comboBoxPlanes.Items.IsEmpty)
+            {
+                planes.AddRange(ftwXML.readFTWPlaneXML());
+            }
+            else
+            {
+                comboBoxPlanes.Items.Clear();
+            }
+          
             foreach (Plane plane in planes)
             {
                 comboBoxPlanes.Items.Add(plane.Name);
@@ -56,8 +64,8 @@ namespace FTWManager.Pages
             plane.Name = textBoxPlaneName.Text;
             plane.EconemySeats = Convert.ToInt16(textBoxPlaneEconemySeats.Text);
             plane.BusinessSeats = Convert.ToInt16(textBoxPlaneBusinessSeats.Text);
-            plane.Cargo = Convert.ToInt16(textBoxPlaneCargo.Text);
-            plane.Payloud = Convert.ToInt16(textBoxPlanePayloud.Text);
+            plane.Cargo = Convert.ToInt32(textBoxPlaneCargo.Text);
+            plane.Payloud = Convert.ToInt32(textBoxPlanePayloud.Text);
 
             foreach (Plane tempplane in planes)
             {
@@ -71,6 +79,8 @@ namespace FTWManager.Pages
 
             ftwXML.writeAddPlane(plane.Name,plane.EconemySeats,plane.BusinessSeats,plane.Cargo,plane.Payloud);
             planes.Add(plane);
+
+            fillComboBoxPlanes();
 
         }
 

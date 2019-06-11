@@ -35,12 +35,12 @@ namespace FTWManager.Windows
 
         private void ButtonJobMarket_Click(object sender, RoutedEventArgs e)
         {
-            if(pageJobMarket == null)
+            if(pageJobMarket == null || !pageJobMarket.IsLoaded)
             {
                 pageJobMarket = new FTWJobMarketPage();
                 frameFTWManager.Content = pageJobMarket;
             }
-            else if(pageJobMarket != null)
+            else if(!pageJobMarket.IsLoaded)
             {
                 frameFTWManager.Content = pageJobMarket;
             }
@@ -48,12 +48,12 @@ namespace FTWManager.Windows
 
         private void ButtonPlane_Click(object sender, RoutedEventArgs e)
         {
-            if (pageJobMarket == null)
+            if (pageFTWPlane == null || !pageFTWPlane.IsLoaded)
             {
                 pageFTWPlane = new FTWPlanePage();
                 frameFTWManager.Content = pageFTWPlane;
             }
-            else if (pageFTWPlane != null)
+            else if (pageFTWPlane.IsLoaded)
             {
                 frameFTWManager.Content = pageFTWPlane;
             }

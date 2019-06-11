@@ -62,7 +62,7 @@ namespace FTWManager.Class
 
         public void GetAssignmentsByAirport(string departureICAO)
         {
-            List<SummaryAssignment> summaryWindowsAssignmentList = new List<SummaryAssignment>();
+            List<AssignmentsFromDeparture> summaryWindowsAssignmentList = new List<AssignmentsFromDeparture>();
 
             if (driver.PageSource != "http://www.ftw-sim.de:8080/FlyTheWorld/users/assignments_meineAuftraege.xhtml?jftfdi=&jffi=%2Fusers%2Fassignments_meineAuftraege.xhtml")
             {
@@ -74,19 +74,18 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).Clear();
-                Thread.Sleep(2000);
+                Wait();
                 driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).SendKeys(departureICAO);                          
             }
             catch (Exception e)
             {
-                MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden         " + e);
+                MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
                 return ;
             }
             try
             {
                 driver.FindElement(By.Name("frm_daten:j_idt138")).Click();
-                Thread.Sleep(3000);
-                Wait();
+                Thread.Sleep(5000);
             }
             catch (Exception e)
             {
@@ -97,7 +96,7 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Id("frm_daten:j_idt144")).Click();
-                Thread.Sleep(2000);
+                Wait();
             }
             catch (Exception e)
             {
@@ -121,7 +120,7 @@ namespace FTWManager.Class
 
         public static void Wait()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
         }
 
         private static void WaitPageLoaded()

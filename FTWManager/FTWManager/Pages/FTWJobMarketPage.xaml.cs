@@ -25,6 +25,9 @@ namespace FTWManager.Pages
     {
         Class.FTWJobMarket ftwJobmarket;
         Class.FTWCheckResources ftwCheckResources;
+        Class.FTWXML ftwXML;
+
+        List<Plane> planes = new List<Plane>();
 
         public FTWJobMarketPage()
         {
@@ -32,60 +35,47 @@ namespace FTWManager.Pages
 
             ftwJobmarket = new Class.FTWJobMarket();
             ftwCheckResources = new Class.FTWCheckResources();
+            ftwXML = new Class.FTWXML();
+
+            loadGui();
+        }
+
+        private void loadGui()
+        { 
+            planes.AddRange(ftwXML.readFTWPlaneXML());
+            foreach (Plane plane in planes)
+            {
+                comboBoxPlanes.Items.Add(plane.Name);
+            }
         }
 
         private void CmdSearch_Click(object sender, RoutedEventArgs e)
         {
-            List<DestinationFromDeparture> listDestinationFromDepartures = ftwJobmarket.getBestDestinationFromDeparture(textboxDepartureIcao.Text);
+            lvJobMarket.Items.Clear();
 
-            foreach(DestinationFromDeparture destinationFromDeparture in listDestinationFromDepartures)
+            Trip bestTrip = ftwJobmarket.GetBestTrip(textboxDepartureIcao.Text, true, planes.Find(x => x.Name == comboBoxPlanes.SelectedItem.ToString()));
+
+            foreach (AssignmentsFromDeparture tempdestinationFromDeparture in bestTrip.Hop)
             {
-                destinationFromDeparture.StartAssignment.order();
-                
-                foreach(SummaryAssignment summaryAssignment in destinationFromDeparture.Hops)
+
+                lvJobMarket.Items.Add(new Items
                 {
-                    summaryAssignment.order();
+                    // Noch alles zu toString Ändern
+                    Departure = tempdestinationFromDeparture.DepartureICAO,
+                    Arrival = tempdestinationFromDeparture.ArrivalICAO,
+                    Pax = Convert.ToString(tempdestinationFromDeparture.getTotalPax()),
+                    PaxMoney = Convert.ToString(tempdestinationFromDeparture.getTotalPaxMoney()),
+                    Cargo = Convert.ToString(tempdestinationFromDeparture.TotalCargo),
+                    CargoMoney = tempdestinationFromDeparture.TotalCargoMoney.ToString(),
+                    GesammtMoney = bestTrip.getMoney().ToString()
+
+
+
                 }
-            }
-
-
-            foreach (DestinationFromDeparture tempdestinationFromDeparture in listDestinationFromDepartures)
-            {
-
-                foreach (SummaryAssignment tempSummaryAssignment in tempdestinationFromDeparture.Hops)
-                {
-
-                    lvJobMarket.Items.Add(new Items
-                    {
-
-                        Departure = tempdestinationFromDeparture.StartAssignment.DepartureICAO,
-                        Arrival = tempdestinationFromDeparture.StartAssignment.ArrivalICAO,
-                        Pax = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPax()),
-                        PaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPaxMoney()),
-                        Cargo = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargo),
-                        CargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargoMoney),
-
-                        HopDeparture = tempSummaryAssignment.DepartureICAO,
-                        HopArrival = tempSummaryAssignment.ArrivalICAO,
-                        HopPax = Convert.ToString(tempSummaryAssignment.getTotalPax()),
-                        HopPaxMoney = Convert.ToString(tempSummaryAssignment.getTotalPaxMoney()),
-                        HopCargo = Convert.ToString(tempSummaryAssignment.TotalCargo),
-                        HopCargoMoney = Convert.ToString(tempSummaryAssignment.TotalCargoMoney),
-
-                        GesammtPaxMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.getTotalPaxMoney() + tempSummaryAssignment.getTotalPaxMoney()),
-                        GesammtCargoMoney = Convert.ToString(tempdestinationFromDeparture.StartAssignment.TotalCargoMoney + tempSummaryAssignment.TotalCargoMoney)
-
-                    }
                     );
-                }
+
             }
         }
-
-
-
-
-
-
 
 
 
@@ -94,6 +84,8 @@ namespace FTWManager.Pages
         {
             FTWManagerConsol ftwManagerConsol = new FTWManagerConsol();
         }
+
+
 
 
         public struct Items
@@ -105,16 +97,13 @@ namespace FTWManager.Pages
             public string Cargo { get; set; }
             public string CargoMoney { get; set; }
 
-            public string HopDeparture { get; set; }
-            public string HopArrival { get; set; }
-            public string HopPax { get; set; }
-            public string HopPaxMoney { get; set; }
-            public string HopCargo { get; set; }
-            public string HopCargoMoney { get; set; }
-
             public string GesammtPaxMoney { get; set; }
             public string GesammtCargoMoney { get; set; }
 
+            public string GesamtMoney { get; set; }
+
         }
+
+      
     }
 }

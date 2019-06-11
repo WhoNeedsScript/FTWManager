@@ -13,6 +13,55 @@ namespace FTWManager.Class
     class FTWXML
     {
 
+        /// <summary>
+        /// Manipulate Userdata
+        /// </summary>
+        public void createFTWUserdataXML()
+        {
+
+            XDocument xDocument = new XDocument(
+               new XDeclaration("1.0", "UTF-16", "yes"),
+               new XElement("Userdata", null)
+               );
+
+            xDocument.Save(Path.Combine(Environment.CurrentDirectory, "Document/FTWUserdata.xml"));
+        }
+
+
+
+        public void writeUserData(string _Username, string _Password)
+        {
+            XDocument xDocument = XDocument.Load(Path.Combine(Environment.CurrentDirectory, "Document/FTWUserdata.xml"));
+            XElement user = xDocument.Element("Userdata");
+            user.Add(
+                new XElement("User",
+                    new XElement("Username", _Username),
+                    new XElement("Password", _Password)
+                    )
+                );
+           
+
+            xDocument.Save(Path.Combine(Environment.CurrentDirectory, "Document/FTWUserdata.xml"));
+        }
+
+        public List<string> readFTWUserdata()
+        {
+            List<string> User = new List<string>();
+
+            foreach (XElement xUser in XElement.Load(Path.Combine(Environment.CurrentDirectory, "Document/FTWUserdata.xml")).Elements("User"))
+            {
+                User.Add(xUser.Element("Username").Value);
+                User.Add(xUser.Element("Password").Value);
+            }
+            return User;
+        }
+
+        //EditUserdata Fehlt
+
+        /// <summary>
+        /// //////////////////////////////////////////////////////
+        /// </summary>
+
         public void createFTWPlaneXML()
         {
 
