@@ -100,7 +100,7 @@ namespace FTWManager.Pages
             public string GesammtPaxMoney { get; set; }
             public string GesammtCargoMoney { get; set; }
 
-            public string GesamtMoney { get; set; }
+            public string GesammtMoney { get; set; }
 
         }
 
