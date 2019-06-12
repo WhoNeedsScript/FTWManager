@@ -13,6 +13,7 @@ using System.Windows;
 using System.Threading;
 using OpenQA.Selenium.Interactions;
 using System.IO;
+using OpenQA.Selenium.Support.UI;
 
 namespace FTWManager.Class
 {
@@ -60,7 +61,7 @@ namespace FTWManager.Class
         }
 
 
-        public void GetAssignmentsByAirport(string departureICAO)
+        public void GetAssignmentsByAirport(string departureICAO,int flag = 0)
         {
             List<AssignmentsFromDeparture> summaryWindowsAssignmentList = new List<AssignmentsFromDeparture>();
 
@@ -85,7 +86,15 @@ namespace FTWManager.Class
             try
             {
                 driver.FindElement(By.Name("frm_daten:j_idt138")).Click();
-                Thread.Sleep(5000);
+                if(flag == 1)
+                {
+                    driver.FindElement(By.Id("frm_daten:assignement_Table: 0:logo"),10);
+                }
+                else
+                {
+                    Thread.Sleep(5000);
+                }
+             
             }
             catch (Exception e)
             {
@@ -128,5 +137,18 @@ namespace FTWManager.Class
             //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
         }
 
+    }
+
+    public static class WebDriverExtensions
+    {
+        public static IWebElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
+        {
+            if (timeoutInSeconds > 0)
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+                return wait.Until(drv => drv.FindElement(by));
+            }
+            return driver.FindElement(by);
+        }
     }
 }

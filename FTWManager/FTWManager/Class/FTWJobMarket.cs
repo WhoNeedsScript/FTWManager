@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using FTWManager.Type;
@@ -101,10 +102,18 @@ namespace FTWManager.Class
                 {
                     listAssignmentsFromDepartures.Clear();
 
+
+                    ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO);
+
+                    //liest die CSV Datei von dem StartflughafenFTWJobsRoute
+                    ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
+
                     // Anti Steffan Abfrage timer Solange bis Assignnets Zurpck gegeben werden
-                    while(listAssignmentsFromDepartures.Count() == 0)
+                    while (listAssignmentsFromDepartures.Count() == 0)
                     {
-                        ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO);
+                       
+
+                        ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO,1);
 
                         //liest die CSV Datei von dem StartflughafenFTWJobsRoute
                         ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
