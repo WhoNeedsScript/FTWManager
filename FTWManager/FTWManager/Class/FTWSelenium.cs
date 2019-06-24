@@ -14,6 +14,7 @@ using System.Threading;
 using OpenQA.Selenium.Interactions;
 using System.IO;
 using OpenQA.Selenium.Support.UI;
+using System.Reflection;
 
 namespace FTWManager.Class
 {
@@ -85,38 +86,48 @@ namespace FTWManager.Class
             }
             try
             {
+                Wait();
                 driver.FindElement(By.Name("frm_daten:j_idt138")).Click();
+
                 if(flag == 1)
                 {
-                    driver.FindElement(By.Id("frm_daten:assignement_Table: 0:logo"),10);
+                    driver.FindElement(By.Id("frm_daten:assignement_Table:0:logo"), 20);
                 }
                 else
                 {
-                    Thread.Sleep(5000);
+                    Wait();
                 }
-             
+               
+
             }
             catch (Exception e)
             {
-                MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden         " + e);
+               // MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden         " + e);
                 return;
             }
 
             try
             {
                 driver.FindElement(By.Id("frm_daten:j_idt144")).Click();
-                Wait();
+                // Wait();
+              
+                    Wait();
+                
+
+
+
             }
             catch (Exception e)
             {
-                MessageBox.Show("In der Auftragsplannung konnte die Button sucheICAO nicht gefunden werden         " + e);
+              //  MessageBox.Show("In der Auftragsplannung konnte die Button sucheICAO nicht gefunden werden         " + e);
                 return ;
             }
 
             try
             {
                 driver.FindElement(By.Id("frm_daten:j_idt152")).Click();
-                Wait();
+            
+                
             }
             catch (Exception e)
             {
@@ -130,6 +141,13 @@ namespace FTWManager.Class
         public static void Wait()
         {
             Thread.Sleep(3000);
+
+        }
+
+        public static void Wait2()
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(12);
+
         }
 
         private static void WaitPageLoaded()
@@ -143,12 +161,17 @@ namespace FTWManager.Class
     {
         public static IWebElement FindElement(this IWebDriver driver, By by, int timeoutInSeconds)
         {
-            if (timeoutInSeconds > 0)
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
-                return wait.Until(drv => drv.FindElement(by));
-            }
+            driver.FindElement(By.Name("frm_daten:j_idt138")).Click();
+            Thread.Sleep(10000);
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            wait.IgnoreExceptionTypes(typeof(TargetInvocationException), typeof(NoSuchElementException), typeof(InvalidOperationException));          
+            wait.Until(ExpectedConditions.ElementExists(by));
+
+            
+
             return driver.FindElement(by);
         }
     }
+
 }

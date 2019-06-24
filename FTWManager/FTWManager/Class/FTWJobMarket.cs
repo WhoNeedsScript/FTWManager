@@ -38,6 +38,14 @@ namespace FTWManager.Class
             //liest die CSV Datei von dem StartflughafenFTWJobsRoute
             ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
 
+            while (listAssignmentsFromDepartures.Count() == 0)
+            {
+                ftwSelenium.GetAssignmentsByAirport(departure,1);
+
+                //liest die CSV Datei von dem StartflughafenFTWJobsRoute
+                ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
+            }
+
             //Sortiert alle Aufträge eines Flughafens nacht Typ und Ammount um die Beladung des Flugzeuges Wenn ausgeählt besser und einfacher läuft
             foreach (AssignmentsFromDeparture tempassignmentsFromDeparture in listAssignmentsFromDepartures)
             {
@@ -111,8 +119,6 @@ namespace FTWManager.Class
                     // Anti Steffan Abfrage timer Solange bis Assignnets Zurpck gegeben werden
                     while (listAssignmentsFromDepartures.Count() == 0)
                     {
-                       
-
                         ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO,1);
 
                         //liest die CSV Datei von dem StartflughafenFTWJobsRoute
@@ -155,22 +161,32 @@ namespace FTWManager.Class
                     tempTrrp.Hop = listAssignmentsFromDepartures;
                     tempTrrp.OrderArrivalsByTotalMoney(maxArrivals);
                     //
+
                     for (int a = 0; a < tempTrrp.Hop.Count; a++, momentan++)
                     {
 
                         if (aktuellerhop == 0)
                         {
-                           
+
                             for (int b = 0; b < 3; b++, momentan++)
                             {
+
+                              
+
                                 listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
+
                             }
                             momentan -= 1;
                         }
                         else
                         {
+                            int y = listTrip[momentan].Hop.Count();
                             listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
 
+                            if (y >= listTrip[momentan].Hop.Count())
+                            {
+                                bool s = true;
+                            }
                         }
                     }
 
