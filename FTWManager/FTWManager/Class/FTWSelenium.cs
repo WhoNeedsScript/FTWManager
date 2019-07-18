@@ -155,7 +155,114 @@ namespace FTWManager.Class
             //driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(5);
         }
 
+        public bool LoadAssignments(List<Assignment> _assignments)
+        {
+            try
+            {
+                if (driver.PageSource != "http://www.ftw-sim.de:8080/FlyTheWorld/users/assignments_meineAuftraege.xhtml?jftfdi=&jffi=%2Fusers%2Fassignments_meineAuftraege.xhtml")
+                {
+                    driver.Navigate().GoToUrl("http://www.ftw-sim.de:8080/FlyTheWorld/users/assignments.xhtml?jftfdi=&jffi=%2Fusers%2Fassignments.xhtml");
+                }
+           
+                try
+                {
+                    driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).Clear();
+                    Wait();
+                    driver.FindElement(By.Name("frm_daten:favoriten_editableInput")).SendKeys(_assignments[0].Departure);
+                    Wait();
+                    driver.FindElement(By.Id("frm_daten:j_idt138")).Click();
+                    Wait();
+                    
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
+                    return false;
+                }
+
+                try
+                {
+                    driver.FindElement(By.Id("frm_daten:selto")).Click();
+                    Wait();           
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
+                    return false;
+                }
+
+                try
+                {
+                    driver.FindElement(By.Id("frm_daten:selto_filter")).SendKeys(_assignments[0].Arrival);
+                    Wait();
+               
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
+                    return false;
+                }
+
+
+                try
+                {
+                    driver.FindElement(By.Id("frm_daten:selto_items")).Click();
+                    Wait();
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
+                    return false;
+                }
+            
+                try
+                {
+                    SelectElement oSelect = new SelectElement(driver.FindElement(By.Name("frm_daten:assignement_Table_rppDD")));
+                    oSelect.SelectByValue("500");
+                    Wait();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("In der Auftragsplannung konnte die Textbox Abflug_ICAO nicht gefunden werden      " + e);
+                    return false;
+                }
+
+               
+                
+                      
+
+                foreach(Assignment assignment in _assignments)
+                {
+                    List<IWebElement> webElementsAssignments = new List<IWebElement>(driver.FindElement(By.Id("frm_daten:assignement_Table_data")).FindElements(By.TagName("tr")));
+
+                    foreach (IWebElement webElementsAssignment in webElementsAssignments)
+                    {
+
+                        List<IWebElement> tdElement = new List<IWebElement>(webElementsAssignment.FindElements(By.TagName("td")));
+                        string name = tdElement[8].Text.Replace(" ", string.Empty);
+                        if (webElementsAssignment.Selected == false && name == assignment.Name)
+                        {
+                            tdElement[1].FindElements(By.TagName("div"))[0].Click();
+                            break;
+                        }
+                    }
+                }
+
+               
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+
     }
+
+   
 
     public static class WebDriverExtensions
     {

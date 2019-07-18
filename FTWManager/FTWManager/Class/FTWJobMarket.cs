@@ -71,7 +71,7 @@ namespace FTWManager.Class
                     assignmentsFromDeparture.TotalEconomPaxMoney = _plane.paxMoney;
                     assignmentsFromDeparture.TotalCargo = _plane.occupiedCargo;
                     assignmentsFromDeparture.TotalCargoMoney = _plane.cargoMoney;
-                    assignmentsFromDeparture.ListAssignments = _plane.load;
+                    assignmentsFromDeparture.ListAssignments = new List<Assignment>(_plane.getLoad());
                 }
             }
 
@@ -103,13 +103,16 @@ namespace FTWManager.Class
 
             for (int aktuellerhop = 0; aktuellerhop < 2; aktuellerhop++)
             {
+
                 // hier werden die 2 Hops hinzugefügt
                 int momentan = 0;
 
                 for (int i = 0; i < listTrip.Count; i += 9)
                 {
-                    listAssignmentsFromDepartures.Clear();
 
+                   
+                    listAssignmentsFromDepartures.Clear();
+                    
 
                     ftwSelenium.GetAssignmentsByAirport(listTrip[i].Hop[aktuellerhop].ArrivalICAO);
 
@@ -125,6 +128,7 @@ namespace FTWManager.Class
                         ftwCSV.ReadAssignmentCSV(ref listAssignmentsFromDepartures);
                     }
 
+                    
 
                     //erstellt den trip
                     foreach (AssignmentsFromDeparture tempassignmentsFromDeparture in listAssignmentsFromDepartures)
@@ -151,7 +155,7 @@ namespace FTWManager.Class
                             assignmentsFromDeparture.TotalEconomPaxMoney = _plane.paxMoney;
                             assignmentsFromDeparture.TotalCargo = _plane.occupiedCargo;
                             assignmentsFromDeparture.TotalCargoMoney = _plane.cargoMoney;
-                            assignmentsFromDeparture.ListAssignments = _plane.load;
+                            assignmentsFromDeparture.ListAssignments = new List<Assignment>(_plane.getLoad());
                         }
                     }
 
@@ -162,32 +166,45 @@ namespace FTWManager.Class
                     tempTrrp.OrderArrivalsByTotalMoney(maxArrivals);
                     //
 
-                    for (int a = 0; a < tempTrrp.Hop.Count; a++, momentan++)
+                    if(tempTrrp.Hop.Count() < 3 && aktuellerhop !=0)
                     {
 
-                        if (aktuellerhop == 0)
+                        for (int z = 0; z < 3; z++, momentan++)
+                        {
+                            listTrip[momentan].Hop.Add(tempTrrp.Hop[0]);
+                        }
+                    }
+                    else
+                    {
+                        for (int a = 0; a < tempTrrp.Hop.Count; a++, momentan++)
                         {
 
-                            for (int b = 0; b < 3; b++, momentan++)
+
+                            if (aktuellerhop == 0)
                             {
 
-                              
+                                for (int b = 0; b < 3; b++, momentan++)
+                                {
 
+
+
+                                    listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
+
+                                }
+                                momentan -= 1;
+                            }
+                            else
+                            {
+                                int y = listTrip[momentan].Hop.Count();
                                 listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
 
-                            }
-                            momentan -= 1;
-                        }
-                        else
-                        {
-                            int y = listTrip[momentan].Hop.Count();
-                            listTrip[momentan].Hop.Add(tempTrrp.Hop[a]);
-
-                            if (y >= listTrip[momentan].Hop.Count())
-                            {
-                                bool s = true;
+                                if (y >= listTrip[momentan].Hop.Count())
+                                {
+                                    bool s = true;
+                                }
                             }
                         }
+                    
                     }
 
 
@@ -195,7 +212,15 @@ namespace FTWManager.Class
                     {
                         i -= 6;
                     }
+
+                    if(momentan == 2 && listTrip[momentan].Hop.Count() != 3) 
+                    {
+                        i -= 3;
+                        momentan -= 3;
+                    }
                 }
+
+               
                
             }
 
@@ -235,9 +260,10 @@ namespace FTWManager.Class
         }
 
 
-        public void LoadPlane()
+        public void LoadPlane(List<Assignment> _assignments)
         {
-
+          
+            ftwSelenium.LoadAssignments(_assignments);
         }
 
 

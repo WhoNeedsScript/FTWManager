@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="FTWManager" Height="450" Width="800">
     <Grid>
-        <Frame x:Name="frameFTWManager" Content="" HorizontalAlignment="Left" Height="600" VerticalAlignment="Top" Width="800" Margin="0,22,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="frameFTWManager" Content="" HorizontalAlignment="Left" Height="397" VerticalAlignment="Top" Width="792" Margin="0,22,0,0" NavigationUIVisibility="Hidden"/>
 
         <Grid Background="Black" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="792">
             <Button Content="JobMarket" x:Name="buttonJobMarket" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="22" Click="ButtonJobMarket_Click"/>

@@ -39,11 +39,11 @@ namespace FTWManager.Class
                     }
 
                     found = false;
-                    string[] temp = line.Replace('"', ' ').Replace('€', ' ').Replace('k', ' ').Replace('g', ' ').Replace('.', ' ').Replace(" ", string.Empty).Split(',');
-
+                    string[] temp = line.Replace('"', ' ').Replace('€', ' ').Replace('.', ' ').Replace(" ", string.Empty).Split(',');
+                    
                     //Erstellt Assignment aus CSV Zeile
                     Assignment assignment = new Assignment();
-
+                    assignment.Name = temp[5];
                     assignment.Departure = temp[1].Replace(" ", string.Empty);
                     assignment.Arrival = temp[3].Replace(" ", string.Empty);
 
@@ -51,8 +51,8 @@ namespace FTWManager.Class
                     {
                         assignment.Type = 1;
 
-                        assignment.paxWeight = Convert.ToInt16(temp[7].Replace(" ", string.Empty));
-                        assignment.paxCargo = Convert.ToInt16(temp[8].Replace(" ", string.Empty));
+                        assignment.paxWeight = Convert.ToInt16(temp[7].Replace(" ", string.Empty).Replace("kg", string.Empty));
+                        assignment.paxCargo = Convert.ToInt16(temp[8].Replace(" ", string.Empty).Replace("kg", string.Empty));
                     }
                     else
                     {

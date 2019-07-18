@@ -26,6 +26,7 @@
         <TextBox Name="textboxDepartureIcao" HorizontalAlignment="Left" Height="23" Margin="405,343,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="comboBoxPlanes" HorizontalAlignment="Left" Margin="57,341,0,0" VerticalAlignment="Top" Width="120"/>
         <Button Content="r" HorizontalAlignment="Left" Margin="193,342,0,0" VerticalAlignment="Top" Width="26"/>
+        <Button Name="cmdLoadPlane" Content="Flugzeug Beladen" HorizontalAlignment="Left" Margin="869,301,0,0" VerticalAlignment="Top" Width="129" Click="CmdLoadPlane_Click"/>
 
     </Grid>
 </Page>

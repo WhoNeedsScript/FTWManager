@@ -25,6 +25,12 @@ namespace FTWManager.Type
 
         public  List<Assignment> load = new List<Assignment>();
 
+        public List<Assignment> getLoad()
+        {
+            return load;
+        }
+            
+
         public bool LoadAssignment(Assignment _assignment)
         {
             if (_assignment.Type == 1)
@@ -43,7 +49,7 @@ namespace FTWManager.Type
             }
             else if (_assignment.Type == 3)
             {
-                if (_assignment.Amount + occupiedCargo <= Cargo && _assignment.Amount + occupiedCargo + occupiedPayloud <= Payloud)
+                if (_assignment.Amount + occupiedCargo <= Cargo && _assignment.Amount + occupiedPayloud <= Payloud)
                 {
                     occupiedCargo += _assignment.Amount;
                     occupiedPayloud += _assignment.Amount;

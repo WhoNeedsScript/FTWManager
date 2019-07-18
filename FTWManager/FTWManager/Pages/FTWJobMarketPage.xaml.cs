@@ -28,6 +28,7 @@ namespace FTWManager.Pages
         Class.FTWXML ftwXML;
 
         List<Plane> planes = new List<Plane>();
+        Trip bestTrip;
 
         public FTWJobMarketPage()
         {
@@ -53,7 +54,7 @@ namespace FTWManager.Pages
         {
             lvJobMarket.Items.Clear();
 
-            Trip bestTrip = ftwJobmarket.GetBestTrip(textboxDepartureIcao.Text, true, planes.Find(x => x.Name == comboBoxPlanes.SelectedItem.ToString()));
+            bestTrip = ftwJobmarket.GetBestTrip(textboxDepartureIcao.Text, true, planes.Find(x => x.Name == comboBoxPlanes.SelectedItem.ToString()));
 
             foreach (AssignmentsFromDeparture tempdestinationFromDeparture in bestTrip.Hop)
             {
@@ -77,7 +78,10 @@ namespace FTWManager.Pages
             }
         }
 
-
+        private void CmdLoadPlane_Click(object sender, RoutedEventArgs e)
+        {
+            ftwJobmarket.LoadPlane(bestTrip.Hop[0].ListAssignments);
+        }
 
 
         public void OpenConsol()
@@ -104,6 +108,6 @@ namespace FTWManager.Pages
 
         }
 
-      
+        
     }
 }

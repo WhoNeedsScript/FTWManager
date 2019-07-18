@@ -10,6 +10,7 @@ namespace FTWManager.Type
     {
         public string Departure;
         public string Arrival;
+        public string Name;
         public int Type; // 1 =pax, 2 = bc pac,  3 = cargo
         public int Amount;
         public double Money;
